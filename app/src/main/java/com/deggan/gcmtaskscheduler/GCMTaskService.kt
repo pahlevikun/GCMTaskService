@@ -44,7 +44,7 @@ class GCMTaskService : GcmTaskService() {
         private val TAG = "HASIL ${GCMTaskService::class.java.simpleName}"
 
         const val GCM_ONEOFF_TAG = "oneoff|[0,0]"
-        const val GCM_REPEAT_TAG = "repeat|[7200,1800]"
+        const val GCM_REPEAT_TAG = "repeat|[3600,900]"
 
         fun scheduleOneOff(context: Context) {
             //in this method, single OneOff task is scheduled (the target service that will be called is MyTaskService.class)
@@ -82,9 +82,9 @@ class GCMTaskService : GcmTaskService() {
                         //specify target service - must extend GcmTaskService
                         .setService(GCMTaskService::class.java)
                         //repeat every 60 seconds
-                        .setPeriod(20)
+                        .setPeriod(15)
                         //specify how much earlier the task can be executed (in seconds)
-                        .setFlex(20)
+                        .setFlex(7)
                         //tag that is unique to this task (can be used to cancel task)
                         .setTag(GCM_REPEAT_TAG)
                         //whether the task persists after device reboot
@@ -130,8 +130,8 @@ class GCMTaskService : GcmTaskService() {
         val autoConnectManager = AutoConnectManager(applicationContext)
         if (connectivityManager.activeNetworkInfo != null &&
                 connectivityManager.activeNetworkInfo.isConnected) {
-            if (autoConnectManager.isAutoConnect){
-                Log.d(TAG,"SCANNING AUTO CONNECT")
+            if (autoConnectManager.isAutoConnect) {
+                Log.d(TAG, "SCANNING AUTO CONNECT")
             }
         }
     }

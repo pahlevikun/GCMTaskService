@@ -8,6 +8,8 @@ import org.jetbrains.anko.relativeLayout
 
 class MainActivity : AppCompatActivity() {
 
+    private val TAG = "HASIL ${GCMTaskService::class.java.simpleName}"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -20,15 +22,21 @@ class MainActivity : AppCompatActivity() {
                 isChecked = autoConnectManager.isAutoConnect
                 setOnCheckedChangeListener { compoundButton, b ->
                     if (compoundButton.isChecked) {
-                        Log.d("HASIL", "TRUE")
+                        Log.d(TAG, "TRUE")
                         autoConnectManager.startAutoConnect()
                         GCMTaskService.cancelRepeat(applicationContext)
                         GCMTaskService.scheduleRepeat(applicationContext)
+                        if (!GCMTaskNotif.isNotificationVisible(this@MainActivity)) {
+                            GCMTaskNotif.showNotification(this@MainActivity, "Wifi.id AutoConnect",
+                                    "Starting AutoConnect Service", "@wifi.id",
+                                    "Scanning New Access-Point")
+                        }
                     } else {
-                        Log.d("HASIL", "FALSE")
+                        Log.d(TAG, "FALSE")
                         autoConnectManager.endAutoConnect()
                         GCMTaskService.cancelAll(applicationContext)
                         GCMTaskService.cancelRepeat(applicationContext)
+                        GCMTaskNotif.hideNotification(this@MainActivity)
                     }
                 }
             }
