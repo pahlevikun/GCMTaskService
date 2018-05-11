@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GCMTaskScheduler</string>
+    <string name="sharePrefData">sharePrefData</string>
+    <string name="sharedPrefItemAutoConnect">sharedPrefItemAutoConnect</string>
 </resources>
